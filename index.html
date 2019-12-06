@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Simple Board</title>
+        <link href="style.css" rel="stylesheet">
+        <style>
+            body {
+                background-color: #ddd;
+                font-family: Verdana, sans-serif;
+                font-size: 100%;
+            }
+            #wrapper {
+                max-width: 600px;
+                margin: 20px auto;
+                text-align: center;
+            }
+            #wrapper > div {
+                display: inline-block;
+            }
+            table {
+                background-color: white;
+            }
+        </style>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    </head>
+
+    <body>
+        <div id="wrapper">
+            <div>
+                <h1>Simple Board</h1>
+                <div id="my-app">
+                    <!-- The app is inserted here -->
+                </div>  
+            </div>
+        </div>
+
+        
+        <script type="module">
+            import { App } from './App.js';
+
+            // Recommended way of doing it by waiting 'till the page has finished loading
+            $(function () {
+                var app = new App('my-app', 5);
+            });
+        </script>
+    </body>
+</html>
