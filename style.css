@@ -26,8 +26,8 @@ td.visited {
 
 
 .player {
-    padding: 10px 0;
-    background-color: rgba(0, 0, 255, 0.5);
+/*    padding: 20px;*/
+    background-color: red;
 }
 
 .blockcss {
