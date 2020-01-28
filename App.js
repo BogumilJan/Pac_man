@@ -3,7 +3,7 @@
 import { Board } from './Board.js';
 import { Player } from './Player.js';
 //import { Block } from './Block.js';
-import { Gold   } from './Gold.js';
+//import { Gold   } from './Gold.js';
 
 
  export class App {
@@ -16,13 +16,15 @@ import { Gold   } from './Gold.js';
         // Declare properties
         this.board = null;  // JS obj
         this.elem = null;  // app <div>
-
+        this.player = this._playerName();
         // Do initialization
         this._initBoard(divId, boardSize);
         this._initBlock();
-//        this._initGold();
-//        this._initPlayer();
-        this._initSetup();
+        this._initGold();
+        this._initPlayer();
+        this._initMovement();
+        //        this._initSetup();
+        
         
         
     }
@@ -41,45 +43,34 @@ import { Gold   } from './Gold.js';
         $('#'+divId).append(this.elem);
     }
      
+     _playerName() {
+         var p = new Player('Pac_Man');
+         return p;
+     }
+     
      _initBlock() {
          let b = true;
-        this.board.addBlock(b); 
+        for (let i=0; i<5; i++) {
+            this.board.addBlock(b);
+        }
     } 
      
-//    _initGold() {
-//        let g = new Gold();
-//        this.board.addGold();
-////    }
-//
-//    _initPlayer() {
-//        let p = new Player('Pac_man');
-//        this.board.addPlayer(p);
-//    }
-
-    
-
-    _initSetup() {
-        let visitCount = 1;
-        const visitLimit = 5;
-
+    _initGold() {
+        let g = true;
         for (let i=0; i<5; i++) {
-//            await this._pause(1000);  // wait a moment...
-//            this.board.movePlayer();
-            this.board.addBlock();
-            console.log('while 1')
-//            visitCount++; // Player instance 
+            this.board.addGold(g);
         }
-        
-//        while (visitCount <= visitLimit) {
-////            await this._pause(1000);  // wait a moment...
-////            this.board.movePlayer();
-//            this.board.addGold();
-//            visitCount++; // Player instance 
-//        }
     }
 
-    async _pause(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
+    _initPlayer() {
+        let p = this.player;
+        this.board.addPlayer(p);
     }
+     
+     _initMovement() {
+         let p = this.player;
+         this.board.movePlayer(p);
+     }
+
 
 }
