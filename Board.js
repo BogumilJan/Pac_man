@@ -13,20 +13,18 @@ export class Board {
     constructor(size) {
         this.size = size;
         this.position = { row: -1, col: -1 };// player's position (row/col)
-        this.blockPosition = { row: -1, col: -1 };
-        this.goldPosition = { row: -1, col: -1 };
-
         this.model = this._createModel();  // a 2-dim array of Square objs
         this.elem = this._createView();  // a <table> elem
+//        this.movePlayer();
     }
 
     _createModel() {
         var model = [];  // model[2][3] is row 3, column 4 (since first row is 0)
 
         for (let r=0; r<this.size; r++) {
-            model.push( [] );  // start a new row
+            model.push( [] ); 
             for ( let c=0; c<this.size; c++) {
-                model[r].push( new Square(r, c) );  // push a new Square on current row
+                model[r].push( new Square(r, c) );
             }
         }
 
@@ -69,62 +67,153 @@ export class Board {
     // Player
     // ------------------------------------------------------------------------
     addBlock(b) {
-        // The board's empty; all squares are available
         
         let pos = this._getRandomPosition(); 
         let sq = this.getSquare(pos.row, pos.col);
-        while(sq.visited && sq._block) {
-            let pos = this._getRandomPosition(); 
-            let sq = this.getSquare(pos.row, pos.col);
+        while(sq._block) {
+            pos = this._getRandomPosition(); 
+            sq = this.getSquare(pos.row, pos.col);
         }
         sq.block = b;
-        this.blockPosition = pos;
     }
     
-    setBlocks() {
+    addGold(g) {
+        
+        let pos = this._getRandomPosition(); 
+        let sq = this.getSquare(pos.row, pos.col);
+        while(sq._block || sq._gold) {
+            pos = this._getRandomPosition(); 
+            sq = this.getSquare(pos.row, pos.col);
+        }
+        sq.gold = g;
+    }
+
+    addPlayer(p) { 
+        let pos = this._getRandomPosition();
+        let sq = this.getSquare(pos.row, pos.col); 
+        while(sq._block || sq._gold) {
+            pos = this._getRandomPosition(); 
+            sq = this.getSquare(pos.row, pos.col);
+        }
+        sq.player = p; 
+        this.position = pos; //player position
         
     }
     
-//    addGold() {
+    
+    
+    movePlayer(p) {
+        
+        
+        
+        // if click is next to player change player sq value to null
+        // click sq (parameter) turm to Player value
+        
+        /*
+        
+        check is it valid move (conditions met) 
+        if not valid return
+        move to player row, col
+        if sq has gold remove from sq and add player
+        
+        */
+        let pos = this.position;
+        let sq = this.getSquare(pos.row, pos.col);
+        sq.player = p;
+        
+        /*
+            Left move
+        */
+        
+        let sqL = this.getSquare(pos.row, pos.col-1);
+        
+//        sq.elem.click(function() {
+//            sq.player = p;
+//        })
+           
+        sqL.elem.click(function() {
+            console.log(sqL);
+//            let id = sqL.id;
+//            sq.id = id;
+            sqL.player = p;
+            let test = sqL.col-1;
+            sqL = this.getSquare(pos.row, test);
+            console.log(test);
+//            sqL.player = null;
+        })
+        
+        
 //        
-//        let pos = this._getRandomPosition(); 
-//        let sq = this.getSquare(pos.row, pos.col);
-//        while(sq.visited) {
-//            let pos = this._getRandomPosition(); 
-//            let sq = this.getSquare(pos.row, pos.col);
+//            if (sqL.click && !sqL.block) {
+//                sq.id = sqL.id;
+//                sq.player = p;
+//            }
+//        
+            
+        }
+        
+    }
+
+
+
+//let sq = this.getSquare(this.position.row, this.position.col); 
+//        
+////        console.log(sq);
+//        
+//        let p = sq.player;
+//        
+//        let hor = sq._horizontalPos;
+//        let ver = sq._verticalPos;
+//        
+//        let sqL = this.getSquare(this.position.row, this.position.col-1);
+//        
+////        console.log(sqL);
+//        
+//        let sqR = this.getSquare(this.position.row, this.position.col+1);
+//        
+//        let sqU = this.getSquare(this.position.row+1, this.position.col);
+//        
+//        let sqD = this.getSquare(this.position.row-1, this.position.col);
+//        
+//        
+//        
+//        if (sqL._horizontalPos == hor) {
+//            $('#'+sqL.id).on('click', function() {
+//                sq._player = null;
+//                sqL.player = p;
+//            })
 //        }
-//        sq.gold = true;
-//        this.goldPosition = pos;
-//    }
-//
-//    addPlayer(p) {  // p argument => new Player instance name - julio
-//        
-//        let pos = this._getRandomPosition();
-//        let sq = this.getSquare(pos.row, pos.col); // random square
-//        sq.player = p; // square instance (initPlayer from App.js)
-//        this.position = pos; //player position
-//    }
-//
-//    movePlayer() {
-//        // Remove player from current square
-//        let sq = this.getSquare(this.position.row, this.position.col); // player position (random position passed in addPlayer method)) l:75
-//        
-//        let p = sq.player; // reading getter
-//        sq.player = null;  // sets sq to 'visited' remove player from square writting setter
-//
-//        // Find an unvisited square
-//        let pos = this._getRandomPosition();
-//        sq = this.getSquare(pos.row, pos.col);
-//        while (sq.visited) {
-//            pos = this._getRandomPosition();
-//            sq = this.getSquare(pos.row, pos.col);
+//      
+//        if (sqR._hotizontalPos == hor) {
+//            $('#'+sqR.id).on('click', function() {
+//                sq._player = null;
+//                sqR.player = p;
+//            })
 //        }
+//        
+////        if (sqU._hotizontalPos = ver) {
+////            $('#'+sqU.id).on('click', function() {
+////                sq._player = null;
+////                sqU._player = p;
+////            })
+////        }
+////        
+////        if (sqD._hotizontalPos = ver) {
+////            $('#'+sqD.id).on('click', function() {
+////                sq._player = null;
+////                sqD._player = p;
+////            })
+////        }
+//            
+//    
+//                     // reading getter
+//            //        sq.player = null;  
 //
-//        // Add player to the square and update position
-//        sq.player = p;
-//        this.position = pos;
-//    }
+//
+//                    // Add player to the square and update position
+//            //        sq.player = p;
+//            //        this.position = pos;
 //    
     
+    
 
-}
