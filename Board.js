@@ -54,20 +54,20 @@ export class Board {
                 console.log(this._checkValidMove(pos));
                 
                 sq.elem.click(function(event) {
-                console.log(event.target.id); 
+//                console.log(event.target.id); 
                     
             /* Click event square id generator */
-                let clickId = event.target.id;
-                let arrayId = clickId.split('');
-                    
-                let pos = {row: Number(arrayId[3]), col: Number(arrayId[5])};
-//                    let pos = [arrayId[3], arrayId[5]];
-                let test = 'sfsdfsdfdfs'; // ASK JIM 
-                console.log(test);
-                console.log(this._checkValidMove(pos));  
+//                let clickId = event.target.id;
+//                let arrayId = clickId.split('');
+//                    
+//                let pos = {row: Number(arrayId[3]), col: Number(arrayId[5])};
+////                    let pos = [arrayId[3], arrayId[5]];
+//                let test = 'sfsdfsdfdfs'; // ASK JIM 
+//                console.log(test);
+//                console.log(this._checkValidMove(pos));  
                     /* Move validation */
                     
-                console.log(pos);
+//                console.log(pos);
                 /*
                 extract low row from event
                 call method for move validation 
@@ -79,6 +79,18 @@ export class Board {
 
             $(tableElem).append(trElem);  // append the <tr> to <table>
         }
+        
+        $(tableElem).click(function(event) {
+                let clickId = event.target.id;
+                let arrayId = clickId.split('');
+                    
+                let pos = {row: Number(arrayId[3]), col: Number(arrayId[5])};
+//                    let pos = [arrayId[3], arrayId[5]];
+                let test = 'sfsdfsdfdfs'; // ASK JIM 
+                console.log(pos);
+                console.log(this._checkValidMove('testing')); 
+        });
+        
         return tableElem;
     }
     
@@ -133,7 +145,7 @@ export class Board {
             pos = this._getRandomPosition(); 
             sq = this.getSquare(pos.row, pos.col);
         }
-        sq.player = p; 
+        sq.player = p;
         this.position = pos; //player position
         console.log(this.click);
     }
