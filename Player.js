@@ -1,7 +1,5 @@
 /* Player.js */
 
-import { Board } from './Board.js';
-
  export class Player {
 
     // ------------------------------------------------------------------------
@@ -12,19 +10,20 @@ import { Board } from './Board.js';
         // Model
 //        this.id = 
         this.name = name;
+        this.money = 0;
 
 
         // View
         this.elem = this._createView();  // <div> element
     }
-     
-     
-
+    
     _createView() {
+        var brake = $('</br>');
         var elem = $('<div>')
             .attr('id', this.name)
-            .addClass('player').text(this.name);
-        
+            .addClass('player')
+            .html('<p><b>'+this.name+'</b><br>'+this.money+'</p>');
+  
         elem.click(function() {
             console.log('player click')
         })
@@ -33,24 +32,13 @@ import { Board } from './Board.js';
     }
      
     
+     
+    
 
     // ------------------------------------------------------------------------
     // Other
     // ------------------------------------------------------------------------
      
-     //ID - board location
-     
-     get boardId() {
-         
-         return this.id;
-     }
-
-//    incrVisitCount() {
-//        // Model
-//        
-//
-//        // View
-//        $(this.elem).html(this.name + '<br>' + this.visitCount);
-//    }
+    
 
 }

@@ -35,7 +35,7 @@ import { Player } from './Player.js';
 
         // Create app <div> and append board element
         this.elem = $('<div>')
-            .attr('id', 'pac man board')
+            .attr('id', 'pac_man_board')
             .append(this.board.elem); // createView method board.js l:34
         
         // Finally, append app <div> to caller's <div>
@@ -44,7 +44,7 @@ import { Player } from './Player.js';
     }
      
      _playerName() {
-         var p = new Player('Pac_Man');
+         var p = new Player('Pacman');
          return p;
      }
      
@@ -56,6 +56,7 @@ import { Player } from './Player.js';
     } 
      
     _initGold() {
+       
         let g = true;
         for (let i=0; i<5; i++) {
             this.board.addGold(g);

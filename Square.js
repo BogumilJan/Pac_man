@@ -1,8 +1,6 @@
 /* Square.js */
 
 import { Player } from './Player.js';
-import { Block  } from './Block.js';
-import { Gold   } from './Gold.js';
 
 
 
@@ -12,22 +10,37 @@ export class Square {
     // Init
     // ------------------------------------------------------------------------
 
-    constructor(row, col) {
+    constructor(row, col) { //pass board as an argument !!!!! 
         // Model
-        this.id = `sq_${row}_${col}`; // use backticks!!!!!!!!! 
+        this.id = `sq_${row}_${col}`; 
+        this.location = {row: row, col: col};
         this._player = null;
-        this.visited = false;
-        this.visitNum = 0;
         this._block = null;
         this._gold = null;
-
+        this.col = col;
+        this.row = row;
+        this.goldValue = 0;
+        
         // View
         this.elem = this._createView();
+//        this._onclick();
     }
 
-    _createView() { // private methods and properties should be used 
+    
+    _onclick() {
+        
+      this.elem.click(function() {
+//            this._player = p;
+            console.log(this.board.position);
+       })
+                   
+    }
+    
+
+    _createView() { 
+        
         let elem = $('<td>')
-            .attr('id', this.id).text(`${this.id}`);
+            .attr('id', this.id);
         
         return elem;
     }
@@ -42,25 +55,29 @@ export class Square {
 
     set player(p) {
         // Model
-        if (p) {
-            p.incrVisitCount();
-        } else {
-            this.visited = true;
-            this.visitNum = this._player.visitCount;
-        }
+        
         this._player = p;
+        console.log(p);
+        
 
         // View
         if (p) {
-            $('#'+this.id).append(p.elem);  // append the player's view to the square's view
-        } else {
-            $('#'+this.id)
-                .empty()  // remove the player view
-                .addClass('visited')
-                .text(this.visitNum);
+            $('#'+this.id).append(p.elem);
+            if (this._gold) {
+            let gold = p.money;
+            p.money = gold + this.goldValue;
+            }
         }
+        
+        // append the player's view to the square's view
+//        else {
+//            $('#'+this.id)
+//                .empty()  // remove the player view
+//                .addClass('visited')
+//                .text(this.visitNum);
+//        }
     }
-
+ 
     get block() {
          return this._block;
     }
@@ -69,7 +86,7 @@ export class Square {
             
         // Model
             this._block = true;
-            this.visited = true;
+//            this.visited = true;
         
         // View
         if (b) {
@@ -94,20 +111,13 @@ export class Square {
     
     set gold(g) {
         // Model
-        if (g) {
-            this.visited = true;
-            g.squareGold = true;
-            
-        } 
-        this._gold = g;
-        
+            this._gold = true;
         // View
         if (g) {
-            $('#'+this.id).append(g.elem);
-            $('#'+this.id).addClass('goldcss');
-        } else {
-            $('#'+this.id).empty();
-            $('#'+this.id).addClass('goldcss');
+            let value = Math.floor(Math.random() * 1000);
+            this.goldValue = value;
+            $('#'+this.id).addClass('goldcss').text(`${value}£`);
+//            console.log(this.goldValue);
         }
     }
 }
