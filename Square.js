@@ -20,22 +20,10 @@ export class Square {
         this.col = col;
         this.row = row;
         this.goldValue = 0;
-        
-        // View
         this.elem = this._createView();
-//        this._onclick();
+        
     }
 
-    
-    _onclick() {
-        
-      this.elem.click(function() {
-//            this._player = p;
-            console.log(this.board.position);
-       })
-                   
-    }
-    
 
     _createView() { 
         
@@ -55,27 +43,20 @@ export class Square {
 
     set player(p) {
         // Model
-        
         this._player = p;
-        console.log(p);
-        
+//        console.log(p);
 
         // View
         if (p) {
             $('#'+this.id).append(p.elem);
+//            p.position = this.location; //Question Jim
             if (this._gold) {
             let gold = p.money;
             p.money = gold + this.goldValue;
             }
         }
         
-        // append the player's view to the square's view
-//        else {
-//            $('#'+this.id)
-//                .empty()  // remove the player view
-//                .addClass('visited')
-//                .text(this.visitNum);
-//        }
+
     }
  
     get block() {
@@ -85,8 +66,8 @@ export class Square {
     set block(b) {
             
         // Model
-            this._block = true;
-//            this.visited = true;
+            this._block = b;
+
         
         // View
         if (b) {
@@ -111,7 +92,7 @@ export class Square {
     
     set gold(g) {
         // Model
-            this._gold = true;
+            this._gold = g;
         // View
         if (g) {
             let value = Math.floor(Math.random() * 1000);

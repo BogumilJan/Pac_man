@@ -13,40 +13,33 @@ import { Player } from './Player.js';
     // ------------------------------------------------------------------------
 
     constructor(divId, boardSize) {
-        // Declare properties
+        // Declaring properties
         this.board = null;  // JS obj
         this.elem = null;  // app <div>
         this.player = this._playerName();
-        // Do initialization
+        
+        // Initialization
         this._initBoard(divId, boardSize);
         this._initBlock();
         this._initGold();
         this._initPlayer();
-        this._initMovement();
-        //        this._initSetup();
-        
-        
-        
+      
     }
 
     _initBoard(divId, boardSize) {
-        // Create board obj
-        this.board = new Board(boardSize);
-
-        // Create app <div> and append board element
-        this.elem = $('<div>')
+        // Board object
+            this.board = new Board(boardSize);
+            this.elem = $('<div>')
             .attr('id', 'pac_man_board')
-            .append(this.board.elem); // createView method board.js l:34
+            .append(this.board.elem); 
         
-        // Finally, append app <div> to caller's <div>
-        // (Only modify DOM once; see NOTES for explanation.)
-        $('#'+divId).append(this.elem);
+            $('#'+divId).append(this.elem);
     }
      
      _playerName() {
-         var p = new Player('Pacman');
-         return p;
-     }
+            var p = new Player('Pacman');
+            return p;
+    }
      
      _initBlock() {
          let b = true;
@@ -65,13 +58,7 @@ import { Player } from './Player.js';
 
     _initPlayer() {
         let p = this.player;
-        this.board.addPlayer(p);
+            this.board.addPlayer(p);
     }
      
-     _initMovement() {
-         let p = this.player;
-         this.board.movePlayer(p);
-     }
-
-
 }

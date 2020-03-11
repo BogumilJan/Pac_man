@@ -1,7 +1,7 @@
 /* Board.js */
 
 import { Square } from './Square.js';
-
+//import { Player } from './Player.js';
 
 
 export class Board {
@@ -15,7 +15,7 @@ export class Board {
         this.position = {row: -1, col: -1};// player's position (row/col)
         this.model = this._createModel();  // a 2-dim array of Square objs
         this.elem = this._createView();  // a <table> elem
-        this.click = '';
+        this.player = null;
         this.clickCol = 0;
 //        this.movePlayer();
     }
@@ -33,13 +33,7 @@ export class Board {
         return model;
     }
     
-    _checkValidMove(pos) {
-        
-        let test = console.log(pos);
-        
-        return test; //return Boolean
-        
-    }
+    
 
     _createView() {
         let tableElem = $('<table>');
@@ -47,74 +41,49 @@ export class Board {
         for (let r=0; r<this.size; r++) {
             let trElem = $('<tr>');
 
-            for (let c=0; c<this.size; c++) {
+        for (let c=0; c<this.size; c++) {
                 let sq = this.getSquare(r, c);
                 $(trElem).append(sq.elem);
-                let pos = 'test';
-                console.log(this._checkValidMove(pos));
-                
-                sq.elem.click(function(event) {
-//                console.log(event.target.id); 
-                    
-            /* Click event square id generator */
-//                let clickId = event.target.id;
-//                let arrayId = clickId.split('');
-//                    
-//                let pos = {row: Number(arrayId[3]), col: Number(arrayId[5])};
-////                    let pos = [arrayId[3], arrayId[5]];
-//                let test = 'sfsdfsdfdfs'; // ASK JIM 
-//                console.log(test);
-//                console.log(this._checkValidMove(pos));  
-                    /* Move validation */
-                    
-//                console.log(pos);
-                /*
-                extract low row from event
-                call method for move validation 
-                if valid move call move player
-                */
-                });
-                
             }
-
-            $(tableElem).append(trElem);  // append the <tr> to <table>
+            
+        $(tableElem).append(trElem);  
         }
         
+/*Player control click event function *******************************/
+        
+        let board = this;
         $(tableElem).click(function(event) {
-                let clickId = event.target.id;
-                let arrayId = clickId.split('');
-                    
-                let pos = {row: Number(arrayId[3]), col: Number(arrayId[5])};
-//                    let pos = [arrayId[3], arrayId[5]];
-                let test = 'sfsdfsdfdfs'; // ASK JIM 
-                console.log(pos);
-                console.log(this._checkValidMove('testing')); 
+            let clickId = event.target.id;
+            let arrayId = clickId.split('');
+            let pos = {
+                row: Number(arrayId[3]), 
+                col: Number(arrayId[5])
+            };
+            if(board._checkValidMove(pos)) {
+                board._movePlayer(pos);
+            }
         });
         
         return tableElem;
     }
     
-    
-    
-
-    // ------------------------------------------------------------------------
-    // Squares
-    // ------------------------------------------------------------------------
+/*Squares methods **************************************************/    
+     
 
     getSquare(row, col) {
+        
         return this.model[row][col];
     }
 
     _getRandomPosition() {
+        
         let r = Math.floor(Math.random() * this.size);
         let c = Math.floor(Math.random() * this.size);
 
         return { row: r, col: c };
     }
 
-    // ------------------------------------------------------------------------
-    // Player
-    // ------------------------------------------------------------------------
+
     addBlock(b) {
         
         let pos = this._getRandomPosition(); 
@@ -135,76 +104,81 @@ export class Board {
             sq = this.getSquare(pos.row, pos.col);
         }
         sq.gold = g;
-        console.log(sq.goldValue);
+//        console.log(sq.goldValue);
     }
 
     addPlayer(p) { 
+        
         let pos = this._getRandomPosition();
         let sq = this.getSquare(pos.row, pos.col); 
         while(sq._block || sq._gold) {
             pos = this._getRandomPosition(); 
             sq = this.getSquare(pos.row, pos.col);
         }
-        sq.player = p;
-        this.position = pos; //player position
-        console.log(this.click);
+        let playerObj = p;
+        sq.player = playerObj;
+        this.position = pos; 
+        this.player = playerObj;
     }
     
-    
-    
-    movePlayer(p) {
+    _checkValidMove(pos) {
         
+        let clickLocation = pos;
+        let playerLocation = this.position;
+        let clRow = clickLocation.row;
+        let clRowUp = clickLocation.row + 1;
+        let clRowDown = clickLocation.row - 1;
+        let clCol = clickLocation.col;
+        let clColLeft = clickLocation.col + 1;
+        let clColRight = clickLocation.col - 1;
+        let plRow = playerLocation.row;
+        let plCol = playerLocation.col;
+        let playerGo = null;    
         
+/*Vertical movement verification logic ****************************************/
         
-        // if click is next to player change player sq value to null
-        // click sq (parameter) turm to Player value
+     
+        if(clRowUp == plRow && clCol == plCol) {
+                playerGo = true;
+            }
+        if(clRowDown == plRow && clCol == plCol)  {
+                playerGo = true;    
+            }
         
-        /*
+/*Horizontal movement verification logic *************************************/  
         
-        check is it valid move (conditions met) 
-        if not valid return
-        move to player row, col
-        if sq has gold remove from sq and add player
+        if(clColLeft == plCol && clRow == plRow) {
+                playerGo = true;
+            }
         
-        */
-        /*
-        let pos = this.position;
-        let sq = this.getSquare(pos.row, pos.col);
-        sq.player = p;
-        */
-        /*
-            Left move
-        */
-//        
-//
-//            
-        }
-    
-    
-        
+        if(clColRight == plCol && clRow == plRow) {
+                playerGo = true;    
+            }
+       
+        return playerGo; 
     }
-
-//          console.log(event.target.id); // click test 
-//                    
-//            /* Click event square id generator */
-//                let clickId = event.target.id;
-//                let arrayId = clickId.split('');
-//                    
-//                let pos = {row: Number(arrayId[3]), col: Number(arrayId[5])};
-////                    let pos = [arrayId[3], arrayId[5]];
-//                let test = 0; // ASK JIM 
-//                console.log(test);
-//                console.log(this._checkValidMove(pos));  
-//                    /* Move validation */
-//                let playerPos = {row: 2, 
-//                                 col: 3};
-//                    
-////                    console.log(pos);
-//                /*
-//                extract low row from event
-//                call method for move validation 
-//                if valid move call move player
-//                */
-
+    
+    _movePlayer(click) {
+        
+        console.log(click);
+        // Current Player position variables - before moving to click - new Player location 
+        let plsqPos = this.position;
+        let player = this.player;
+        let rowPl = plsqPos.row;
+        let colPl = plsqPos.col;
+        // Current click position - new Player location
+        let clsqPos = click;
+        let rowCl = click.row;
+        let colCl = click.col;
+        
+        let playerSq = this.getSquare(rowCl, colCl);
+        playerSq.player = player;
+        this.player = playerSq.player;
+        this.position = clsqPos;
+        console.log(playerSq);
+   
+    }
+     
+}
 
 

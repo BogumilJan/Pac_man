@@ -11,6 +11,7 @@
 //        this.id = 
         this.name = name;
         this.money = 0;
+        this.position = null;
 
 
         // View
@@ -25,7 +26,9 @@
             .html('<p><b>'+this.name+'</b><br>'+this.money+'</p>');
   
         elem.click(function() {
-            console.log('player click')
+            console.log('player click');
+            console.log(this.name); // Why this.name doesnt work here? It works above!
+            
         })
         
         return elem;
