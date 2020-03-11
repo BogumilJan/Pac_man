@@ -1,7 +1,7 @@
 /* Board.js */
 
 import { Square } from './Square.js';
-//import { Player } from './Player.js';
+import { Player } from './Player.js';
 
 
 export class Board {
@@ -125,6 +125,7 @@ export class Board {
         
         let clickLocation = pos;
         let playerLocation = this.position;
+        let clsq = this.getSquare(pos.row, pos.col);
         let clRow = clickLocation.row;
         let clRowUp = clickLocation.row + 1;
         let clRowDown = clickLocation.row - 1;
@@ -137,17 +138,20 @@ export class Board {
         
 /*Vertical movement verification logic ****************************************/
         
-     
+        if(!clsq.block) {
         if(clRowUp == plRow && clCol == plCol) {
                 playerGo = true;
             }
         if(clRowDown == plRow && clCol == plCol)  {
                 playerGo = true;    
             }
+        }
+        
         
 /*Horizontal movement verification logic *************************************/  
         
-        if(clColLeft == plCol && clRow == plRow) {
+        if(!clsq.block) {
+         if(clColLeft == plCol && clRow == plRow) {
                 playerGo = true;
             }
         
@@ -155,7 +159,9 @@ export class Board {
                 playerGo = true;    
             }
        
-        return playerGo; 
+        return playerGo;    
+        }
+        
     }
     
     _movePlayer(click) {
@@ -175,7 +181,13 @@ export class Board {
         playerSq.player = player;
         this.player = playerSq.player;
         this.position = clsqPos;
-        console.log(playerSq);
+        console.log(playerSq.gold);
+        console.log(player.test, player.money);
+        console.log(player.money);
+        playerSq._gold = null;
+//        if(playerSq._gold) {
+//           
+//           }
    
     }
      

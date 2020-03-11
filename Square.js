@@ -49,11 +49,15 @@ export class Square {
         // View
         if (p) {
             $('#'+this.id).append(p.elem);
-//            p.position = this.location; //Question Jim
-            if (this._gold) {
-            let gold = p.money;
-            p.money = gold + this.goldValue;
-            }
+            p.position = this.location; //Question Jim
+            
+            if(this.goldValue > 0) {
+                p.money += this.goldValue;
+                this._gold = null;
+                }
+//            if (this._gold) {
+//            p.money += this.goldValue;
+//            }
         }
         
 
@@ -94,7 +98,7 @@ export class Square {
         // Model
             this._gold = g;
         // View
-        if (g) {
+        if (this._gold) {
             let value = Math.floor(Math.random() * 1000);
             this.goldValue = value;
             $('#'+this.id).addClass('goldcss').text(`${value}£`);
