@@ -109,21 +109,21 @@ export class Board {
 
     addPlayer(p) { 
         
-        let pos = this._getRandomPosition();
+        let pos = this._getRandomPosition();          
         let sq = this.getSquare(pos.row, pos.col); 
         while(sq._block || sq._gold) {
             pos = this._getRandomPosition(); 
             sq = this.getSquare(pos.row, pos.col);
         }
-        let playerObj = p;
+        let playerObj = p;  
         sq.player = playerObj;
-        this.position = pos; 
+        this.position = pos;                                 
         this.player = playerObj;
     }
-    
+                                                                 
     _checkValidMove(pos) {
         
-        let clickLocation = pos;
+        let clickLocation = pos;           
         let playerLocation = this.position;
         let clsq = this.getSquare(pos.row, pos.col);
         let clRow = clickLocation.row;
@@ -145,8 +145,7 @@ export class Board {
         if(clRowDown == plRow && clCol == plCol)  {
                 playerGo = true;    
             }
-        }
-        
+        }    
         
 /*Horizontal movement verification logic *************************************/  
         
@@ -184,7 +183,8 @@ export class Board {
         console.log(playerSq.gold);
         console.log(player.test, player.money);
         console.log(player.money);
-        playerSq._gold = null;
+        playerSq.gold = null;
+        console.log(playerSq._gold); // getter
 //        if(playerSq._gold) {
 //           
 //           }

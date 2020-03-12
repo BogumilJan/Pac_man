@@ -9,7 +9,7 @@
     constructor(name) {
         // Model
         this.name = name;
-        this.money = 0;
+        this.money = 0; // _underscore remeber plater case l:188 board.js
         this.test = this._moneyGrabber();
         this.position = null;
         // View
@@ -21,7 +21,7 @@
     } 
     
     _createView() {
-        var brake = $('</br>');
+//        var brake = $('</br>');
         var elem = $('<div>')
             .attr('id', this.name)
             .addClass('player')
@@ -36,7 +36,13 @@
         return elem;
     }
      
+    get moneyDisplay() {
+        //player display upfdate
+    }
     
+    set moneyDisplay(testing) {
+        
+    }
      
     
 

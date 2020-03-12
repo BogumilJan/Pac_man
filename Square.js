@@ -1,7 +1,7 @@
 /* Square.js */
 
 import { Player } from './Player.js';
-
+import { Gold } from './Gold.js';
 
 
 export class Square {
@@ -45,22 +45,22 @@ export class Square {
         // Model
         this._player = p;
 //        console.log(p);
-
+        
         // View
         if (p) {
             $('#'+this.id).append(p.elem);
-            p.position = this.location; //Question Jim
+            p.position = this.location; 
             
+            //Question Jim !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            this._gold = null;
+            this.gold = null;
             if(this.goldValue > 0) {
                 p.money += this.goldValue;
-                this._gold = null;
                 }
 //            if (this._gold) {
 //            p.money += this.goldValue;
 //            }
         }
-        
-
     }
  
     get block() {
@@ -71,23 +71,12 @@ export class Square {
             
         // Model
             this._block = b;
-
         
         // View
         if (b) {
             $('#'+this.id).addClass('blockcss');
         } 
-//            
-//        this._block = b;
-//        
-//        // View
-//        if (b) {
-//            $('#'+this.id).append(b.elem);
-//            $('#'+this.id).addClass('blockcss');
-//        } else {
-//            $('#'+this.id).empty();
-//            $('#'+this.id).addClass('blockcss');
-//        }
+
     }
     
     get gold() {
@@ -103,6 +92,8 @@ export class Square {
             this.goldValue = value;
             $('#'+this.id).addClass('goldcss').text(`${value}£`);
 //            console.log(this.goldValue);
+        } else {
+            // Class removing 
         }
     }
 }
