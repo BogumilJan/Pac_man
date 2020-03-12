@@ -27,7 +27,12 @@ td.visited {
 
 .player {
 /*    padding: 20px;*/
-    background-color: red;
+    background-color: orangered;
+    height: 80%;
+    width: 100%;
+    padding-top: 20%;
+    text-align: center;
+    font-size: 60%;
 }
 
 .blockcss {
@@ -35,14 +40,12 @@ td.visited {
     
 }
 
-.gold {
-    background-color: darkgoldenrod;
-    text-decoration-color: black;
-}
-
 .goldcss {
     background-color: darkgoldenrod;
     text-decoration-color: black;
+    font-weight: bold;
+    font-family: monospace;
+    font-size: 1.5em;
 }
 
 .block {

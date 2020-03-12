@@ -1,7 +1,4 @@
-/*Gold.js*/
-
-
-
+/* Gold.js */
 
  export class Gold {
 
@@ -9,33 +6,39 @@
     // Init
     // ------------------------------------------------------------------------
 
-    constructor() {
+    constructor(money) {
         // Model
-        this.squareGold = false;
-        this.visitCount = 0;
-
+//        this.name = name;
+        this.money = money;
+        this.price = `${money}£`;
+        this.test = this._moneyGrabber();
+        this.position = null;
         // View
         this.elem = this._createView();  // <div> element
     }
-
+    
+    _moneyGrabber() {
+       return this.money; 
+    } 
+    
     _createView() {
+
         var elem = $('<div>')
-            .attr('id', 'gold')
-            .addClass('gold').text('Gold');
+            .attr('id', this.price)
+            .addClass('goldcss')
+            .html('<p><b>'+this.name+'</b><br>'+this.test+'</p>');
+  
+//        elem.click(function() {
+//            console.log('player click');
+//            console.log(this.name); // Why this.name doesnt work here? It works above! });
+            
+        
         
         return elem;
     }
+     
+    
 
-    // ------------------------------------------------------------------------
-    // Other
-    // ------------------------------------------------------------------------
-
-    incrVisitCount() {
-        // Model
-        this.visitCount++;
-
-        // View
-        
-    }
+    
 
 }

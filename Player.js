@@ -1,7 +1,5 @@
 /* Player.js */
 
-import { Board } from './Board.js';
-
  export class Player {
 
     // ------------------------------------------------------------------------
@@ -10,26 +8,40 @@ import { Board } from './Board.js';
 
     constructor(name) {
         // Model
-//        this.id = 
         this.name = name;
-
-
+        this.money = 0; // _underscore remeber plater case l:188 board.js
+        this.test = this._moneyGrabber();
+        this.position = null;
         // View
         this.elem = this._createView();  // <div> element
     }
-     
-     
-
+    
+    _moneyGrabber() {
+       return this.money; 
+    } 
+    
     _createView() {
+//        var brake = $('</br>');
         var elem = $('<div>')
             .attr('id', this.name)
-            .addClass('player').text(this.name);
+            .addClass('player')
+            .html('<p><b>'+this.name+'</b><br>'+this.test+'</p>');
+  
+//        elem.click(function() {
+//            console.log('player click');
+//            console.log(this.name); // Why this.name doesnt work here? It works above! });
+            
         
-        elem.click(function() {
-            console.log('player click')
-        })
         
         return elem;
+    }
+     
+    get moneyDisplay() {
+        //player display upfdate
+    }
+    
+    set moneyDisplay(testing) {
+        
     }
      
     
@@ -38,19 +50,6 @@ import { Board } from './Board.js';
     // Other
     // ------------------------------------------------------------------------
      
-     //ID - board location
-     
-     get boardId() {
-         
-         return this.id;
-     }
-
-//    incrVisitCount() {
-//        // Model
-//        
-//
-//        // View
-//        $(this.elem).html(this.name + '<br>' + this.visitCount);
-//    }
+    
 
 }

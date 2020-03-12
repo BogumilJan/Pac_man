@@ -1,0 +1,198 @@
+/* Board.js */
+
+import { Square } from './Square.js';
+
+
+
+export class Board {
+
+    // ------------------------------------------------------------------------
+    // Init
+    // ------------------------------------------------------------------------
+
+    constructor(size) {
+        this.size = size;
+        this.position = {row: -1, col: -1};// player's position (row/col)
+        this.model = this._createModel();  // a 2-dim array of Square objs
+        this.elem = this._createView();  // a <table> elem
+        this.click = '';
+        this.clickCol = 0;
+//        this.movePlayer();
+    }
+
+    _createModel() {
+        var model = [];  // model[2][3] is row 3, column 4 (since first row is 0)
+
+        for (let r=0; r<this.size; r++) {
+            model.push( [] ); 
+            for ( let c=0; c<this.size; c++) {
+                model[r].push( new Square(r, c) );
+            }
+        }
+
+        return model;
+    }
+    
+    _checkValidMove(pos) {
+        
+        let test = console.log(pos);
+        
+        return test; //return Boolean
+        
+    }
+
+    _createView() {
+        let tableElem = $('<table>');
+
+        for (let r=0; r<this.size; r++) {
+            let trElem = $('<tr>');
+
+            for (let c=0; c<this.size; c++) {
+                let sq = this.getSquare(r, c);
+                $(trElem).append(sq.elem);
+                let pos = 'test';
+                console.log(this._checkValidMove(pos));
+                
+                sq.elem.click(function(event) {
+//                console.log(event.target.id); 
+                    
+            /* Click event square id generator */
+                let clickId = event.target.id;
+                let arrayId = clickId.split('');
+                    
+                let pos = {row: Number(arrayId[3]), col: Number(arrayId[5])};
+//                    let pos = [arrayId[3], arrayId[5]];
+                let test = 'sfsdfsdfdfs'; // ASK JIM 
+                console.log(test);
+                console.log(this._checkValidMove(pos));  
+                    /* Move validation */
+                    
+                console.log(pos);
+                /*
+                extract low row from event
+                call method for move validation 
+                if valid move call move player
+                */
+                });
+                
+            }
+
+            $(tableElem).append(trElem);  // append the <tr> to <table>
+        }
+        return tableElem;
+    }
+    
+    
+    
+
+    // ------------------------------------------------------------------------
+    // Squares
+    // ------------------------------------------------------------------------
+
+    getSquare(row, col) {
+        return this.model[row][col];
+    }
+
+    _getRandomPosition() {
+        let r = Math.floor(Math.random() * this.size);
+        let c = Math.floor(Math.random() * this.size);
+
+        return { row: r, col: c };
+    }
+
+    // ------------------------------------------------------------------------
+    // Player
+    // ------------------------------------------------------------------------
+    addBlock(b) {
+        
+        let pos = this._getRandomPosition(); 
+        let sq = this.getSquare(pos.row, pos.col);
+        while(sq._block) {
+            pos = this._getRandomPosition(); 
+            sq = this.getSquare(pos.row, pos.col);
+        }
+        sq.block = b;
+    }
+    
+    addGold(g) {
+        
+        let pos = this._getRandomPosition(); 
+        let sq = this.getSquare(pos.row, pos.col);
+        while(sq._block || sq._gold) {
+            pos = this._getRandomPosition(); 
+            sq = this.getSquare(pos.row, pos.col);
+        }
+        sq.gold = g;
+        console.log(sq.goldValue);
+    }
+
+    addPlayer(p) { 
+        let pos = this._getRandomPosition();
+        let sq = this.getSquare(pos.row, pos.col); 
+        while(sq._block || sq._gold) {
+            pos = this._getRandomPosition(); 
+            sq = this.getSquare(pos.row, pos.col);
+        }
+        sq.player = p; 
+        this.position = pos; //player position
+        console.log(this.click);
+    }
+    
+    
+    
+    movePlayer(p) {
+        
+        
+        
+        // if click is next to player change player sq value to null
+        // click sq (parameter) turm to Player value
+        
+        /*
+        
+        check is it valid move (conditions met) 
+        if not valid return
+        move to player row, col
+        if sq has gold remove from sq and add player
+        
+        */
+        /*
+        let pos = this.position;
+        let sq = this.getSquare(pos.row, pos.col);
+        sq.player = p;
+        */
+        /*
+            Left move
+        */
+//        
+//
+//            
+        }
+    
+    
+        
+    }
+
+          console.log(event.target.id); // click test 
+                    
+            /* Click event square id generator */
+                let clickId = event.target.id;
+                let arrayId = clickId.split('');
+                    
+                let pos = {row: Number(arrayId[3]), col: Number(arrayId[5])};
+//                    let pos = [arrayId[3], arrayId[5]];
+                let test = 0; // ASK JIM 
+                console.log(test);
+                console.log(this._checkValidMove(pos));  
+                    /* Move validation */
+                let playerPos = {row: 2, 
+                                 col: 3};
+                    
+//                    console.log(pos);
+                /*
+                extract low row from event
+                call method for move validation 
+                if valid move call move player
+                */
+
+
+
