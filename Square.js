@@ -50,16 +50,18 @@ export class Square {
         if (p) {
             $('#'+this.id).append(p.elem);
             p.position = this.location; 
-            
-            //Question Jim !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            this._gold = null;
-            this.gold = null;
+//            this._gold = null;
+//            this.gold = null;
             if(this.goldValue > 0) {
                 p.money += this.goldValue;
+                let moneyStore = p.money;
+                console.log('test' + moneyStore + this._gold);
+                
+//                p.moneyDisplay(moneyStore);
                 }
-//            if (this._gold) {
-//            p.money += this.goldValue;
-//            }
+            let g = this._gold;
+//            g.elem = null;
+
         }
     }
  
@@ -86,9 +88,10 @@ export class Square {
     set gold(g) {
         // Model
             this._gold = g;
+            console.log(g);
         // View
         if (this._gold) {
-            let value = Math.floor(Math.random() * 1000);
+            let value = Math.floor(Math.random() * 10) * 100;
             this.goldValue = value;
             $('#'+this.id).addClass('goldcss').text(`${value}£`);
 //            console.log(this.goldValue);

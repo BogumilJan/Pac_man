@@ -180,9 +180,9 @@ export class Board {
         playerSq.player = player;
         this.player = playerSq.player;
         this.position = clsqPos;
-        console.log(playerSq.gold);
-        console.log(player.test, player.money);
-        console.log(player.money);
+//        console.log(playerSq.gold);
+//        console.log(player.test, player.money);
+//        console.log(player.money);
         playerSq.gold = null;
         console.log(playerSq._gold); // getter
 //        if(playerSq._gold) {
