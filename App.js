@@ -27,19 +27,23 @@ import { Player } from './Player.js';
     }
 
     _initBoard(divId, boardSize) {
+
         // Board object
             this.board = new Board(boardSize);
             this.elem = $('<div>')
             .attr('id', 'pac_man_board')
             .append(this.board.elem); 
+
         
             $('#'+divId).append(this.elem);
     }
      
      _playerName() {
-            var p = new Player('Pacman');
-            return p;
-    }
+
+         var p = new Player('Pacman');
+         return p;
+     }
+
      
      _initBlock() {
          let b = true;
@@ -61,4 +65,9 @@ import { Player } from './Player.js';
             this.board.addPlayer(p);
     }
      
+     _initMovement() {
+         let p = this.player;
+         this.board.movePlayer(p);
+     }
+
 }
