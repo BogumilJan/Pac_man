@@ -17,6 +17,9 @@ export class Board {
         this.elem = this._createView();  // a <table> elem
         this.player = null;
         this.clickCol = 0;
+        this.blockObjArray = [];
+        this.gold = null;
+        this.goldObjArray = [];
 //        this.movePlayer();
     }
 
@@ -52,6 +55,7 @@ export class Board {
 /*Player control click event function *******************************/
         
         let board = this;
+        let playerPos = this.player;
         $(tableElem).click(function(event) {
             let clickId = event.target.id;
             let arrayId = clickId.split('');
@@ -59,9 +63,21 @@ export class Board {
                 row: Number(arrayId[3]), 
                 col: Number(arrayId[5])
             };
-            if(board._checkValidMove(pos)) {
-                board._movePlayer(pos);
-            }
+//            let squareObject = event.currentTarget; 
+//            console.log(squareObject);
+            let gold = this.gold;
+            if (board._checkBlock(pos)) {
+                if(board._checkGold(pos)) {
+                    if(board._checkValidMove(pos)) {
+                        board._movePlayer(pos);
+                        }
+                    }
+                }
+            
+            
+//            else(board._checkOtherObjects(gold)) {
+//                board._movePlayer(pos);
+//            }
         });
         
         return tableElem;
@@ -93,6 +109,8 @@ export class Board {
             sq = this.getSquare(pos.row, pos.col);
         }
         sq.block = b;
+        this.blockObjArray.push(sq.location);
+        console.log(this.blockObjArray)
     }
     
     addGold(g) {
@@ -104,7 +122,11 @@ export class Board {
             sq = this.getSquare(pos.row, pos.col);
         }
         sq.gold = g;
-//        console.log(sq.goldValue);
+        this.gold = g;
+        let goldObjectId = sq.id;
+        g.id = goldObjectId;
+        this.goldObjArray.push(sq.location);
+        console.log(this.goldObjArray);
     }
 
     addPlayer(p) { 
@@ -119,13 +141,49 @@ export class Board {
         sq.player = playerObj;
         this.position = pos;                                 
         this.player = playerObj;
+//        console.log(this.gold);
+    }
+    
+    _checkBlock(blockClick) {
+        let blockArray = this.blockObjArray;
+        let validation = null;
+//        console.log(blockArray);
+        for (let i=0; i<5; i++) {
+            if(blockArray[i] == blockClick) {
+                console.log(blockArray[i]);
+                validation = false;
+//           } else {
+//                return true;
+           }
+        }
+       return validation; 
+    }
+    
+    _checkGold(goldClick) {
+        let goldArray = this.goldObjArray;
+        let validation = true;
+        console.log(goldArray);
+        for (let i=0; i<5; i++) {
+            if(goldArray[i] == goldClick) {
+                console.log(goldArray[i]);
+                validation = true;
+           }
+        }
+        return validation;
     }
                                                                  
     _checkValidMove(pos) {
         
         let clickLocation = pos;           
         let playerLocation = this.position;
-        let clsq = this.getSquare(pos.row, pos.col);
+        let plsq = this.getSquare(playerLocation.row, playerLocation.col);
+        let plObj = this.player;
+        let goldObj = this.gold;
+        console.log(pos.row + ' testing valid move');
+//        let clsq = this.getSquare(pos.row, pos.col);
+        let clElem = goldObj.position;
+//        console.log(clickIdString);
+        let clBlock = 0;
         let clRow = clickLocation.row;
         let clRowUp = clickLocation.row + 1;
         let clRowDown = clickLocation.row - 1;
@@ -138,7 +196,15 @@ export class Board {
         
 /*Vertical movement verification logic ****************************************/
         
-        if(!clsq.block) {
+        // Gold function 
+        
+        let goldVerification = (pos) => {
+            if(clElem) {
+                return true
+            }
+        }
+        
+        if(true) {
         if(clRowUp == plRow && clCol == plCol) {
                 playerGo = true;
             }
@@ -149,7 +215,7 @@ export class Board {
         
 /*Horizontal movement verification logic *************************************/  
         
-        if(!clsq.block) {
+        if(true) {
          if(clColLeft == plCol && clRow == plRow) {
                 playerGo = true;
             }
@@ -157,15 +223,15 @@ export class Board {
         if(clColRight == plCol && clRow == plRow) {
                 playerGo = true;    
             }
-       
-        return playerGo;    
-        }
         
+        }
+        return playerGo;    
     }
+    
     
     _movePlayer(click) {
         
-        console.log(click);
+//        console.log(click); // Working
         // Current Player position variables - before moving to click - new Player location 
         let plsqPos = this.position;
         let player = this.player;
@@ -180,11 +246,12 @@ export class Board {
         playerSq.player = player;
         this.player = playerSq.player;
         this.position = clsqPos;
-        console.log(playerSq.gold);
-        console.log(player.test, player.money);
-        console.log(player.money);
-        playerSq.gold = null;
-        console.log(playerSq._gold); // getter
+        
+//        console.log(playerSq.gold);
+//        console.log(player.test, player.money);
+//        console.log(player.money);
+//        playerSq.gold = 10;
+        console.log(playerSq.gold); // getter
 //        if(playerSq._gold) {
 //           
 //           }

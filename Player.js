@@ -10,38 +10,42 @@
         // Model
         this.name = name;
         this.money = 0; // _underscore remeber plater case l:188 board.js
-        this.test = this._moneyGrabber();
+        this._money = null;
         this.position = null;
+        this.id = null;
+//        this.display = this.moneyDisplay();
         // View
         this.elem = this._createView();  // <div> element
     }
-    
-    _moneyGrabber() {
-       return this.money; 
-    } 
-    
+     
+//    get idExtraction() {
+//        return this._idExtraction();
+//    }
+//    
+//    set idExtraction(id) {
+//        this.id = id;
+//    }
+     
+//    set moneyDisplay(value) {
+//        
+//        this._money = value;
+//        
+//    }
+//     
+//    get moneyDisplay() {
+//        //player display upfdate
+//        return this._money;
+//    }
+     
     _createView() {
+        console.log(this.id);
 //        var brake = $('</br>');
         var elem = $('<div>')
             .attr('id', this.name)
             .addClass('player')
-            .html('<p><b>'+this.name+'</b><br>'+this.test+'</p>');
-  
-//        elem.click(function() {
-//            console.log('player click');
-//            console.log(this.name); // Why this.name doesnt work here? It works above! });
+            .html('<p><b>'+this.name+'</b><br>'+this.id+'</p>');
             
-        
-        
         return elem;
-    }
-     
-    get moneyDisplay() {
-        //player display upfdate
-    }
-    
-    set moneyDisplay(testing) {
-        
     }
      
     

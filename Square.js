@@ -21,6 +21,7 @@ export class Square {
         this.row = row;
         this.goldValue = 0;
         this.elem = this._createView();
+        this.goldClick = null;
         
     }
 
@@ -48,18 +49,25 @@ export class Square {
         
         // View
         if (p) {
+            $('#'+this.id).empty();
             $('#'+this.id).append(p.elem);
             p.position = this.location; 
-            
-            //Question Jim !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            this._gold = null;
-            this.gold = null;
+//            p.idExtraction(this.id);
+//            console.log(this.id);
+
+//            this.gold = null;
             if(this.goldValue > 0) {
                 p.money += this.goldValue;
+                let moneyStore = p.money;
+                 $('#'+this.id).append(p.elem);
+//                console.log('test' + moneyStore + this._gold);
+//                p.
+//                p.moneyDisplay(moneyStore);
+//                this._gold = null;       
                 }
-//            if (this._gold) {
-//            p.money += this.goldValue;
-//            }
+            let g = this._gold;
+//            g.elem = null;
+
         }
     }
  
@@ -86,14 +94,32 @@ export class Square {
     set gold(g) {
         // Model
             this._gold = g;
+            g.position = this.location;
+        console.log(g.position);
+            g.id = this.id;
+        console.log(g.id);
+        this.goldValue = g.option;
+//            g.idExtraction(this.id);
+//        console.log(g.position); // Working
+            $('#'+this.id).append(g.elem.html('<p><b>'+this.goldValue+'£'+'</b><br>'+this.id+'</p>'));
+            let divId = $(g.elem).attr('id', this.id);    
+            $(divId).click(function(event) {
+                this.goldClick = event.currentTarget.id;
+               console.log(this.goldClick); 
+            });
+            
+            
         // View
-        if (this._gold) {
-            let value = Math.floor(Math.random() * 1000);
-            this.goldValue = value;
-            $('#'+this.id).addClass('goldcss').text(`${value}£`);
-//            console.log(this.goldValue);
-        } else {
+//        if (this._gold) {
+////            let value = Math.floor(Math.random() * 10) * 100;
+//            
+////            g.elem;
+//            
+////            console.log(g.id); // Working
+////            console.log(g.test); // Working
+////            $('#'+this.id).addClass('goldcss').text(`${value}£`);
+////            console.log(this.goldValue);
+//        } else {
             // Class removing 
         }
     }
-}

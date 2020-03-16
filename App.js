@@ -3,7 +3,7 @@
 import { Board } from './Board.js';
 import { Player } from './Player.js';
 //import { Block } from './Block.js';
-//import { Gold   } from './Gold.js';
+import { Gold   } from './Gold.js'; 
 
 
  export class App {
@@ -27,23 +27,19 @@ import { Player } from './Player.js';
     }
 
     _initBoard(divId, boardSize) {
-
         // Board object
             this.board = new Board(boardSize);
             this.elem = $('<div>')
             .attr('id', 'pac_man_board')
             .append(this.board.elem); 
-
         
             $('#'+divId).append(this.elem);
     }
      
      _playerName() {
-
-         var p = new Player('Pacman');
-         return p;
-     }
-
+            var p = new Player('Pacman');
+            return p;
+    }
      
      _initBlock() {
          let b = true;
@@ -53,9 +49,9 @@ import { Player } from './Player.js';
     } 
      
     _initGold() {
-       
-        let g = true;
         for (let i=0; i<5; i++) {
+            let valueRandom = Math.floor(Math.random() * 10) * 100;
+            let g = new Gold(valueRandom);
             this.board.addGold(g);
         }
     }
@@ -65,9 +61,4 @@ import { Player } from './Player.js';
             this.board.addPlayer(p);
     }
      
-     _initMovement() {
-         let p = this.player;
-         this.board.movePlayer(p);
-     }
-
 }
