@@ -66,13 +66,13 @@ export class Board {
 //            let squareObject = event.currentTarget; 
 //            console.log(squareObject);
             let gold = this.gold;
-            if (board._checkBlock(pos)) {
-                if(board._checkGold(pos)) {
+//            if (board._checkBlock(pos)) {
+//                if(board._checkGold(pos)) {
                     if(board._checkValidMove(pos)) {
                         board._movePlayer(pos);
                         }
-                    }
-                }
+//                    }
+//                }
             
             
 //            else(board._checkOtherObjects(gold)) {
@@ -197,14 +197,35 @@ export class Board {
 /*Vertical movement verification logic ****************************************/
         
         // Gold function 
-        
-        let goldVerification = (pos) => {
-            if(clElem) {
-                return true
-            }
+        var board = this;
+        function blockValid() {
+            let blockArray = board.blockObjArray;
+            let validation = true;
+        console.log(blockArray[2]);
+        console.log(clickLocation);
+            for (let i=0; i<5; i++) {
+                if(blockArray[i] === clickLocation) {
+                    validation = false;
+                    console.log(validation);
+           }
+        }
+            return validation;
         }
         
-        if(true) {
+        console.log(blockValid());
+        
+//        let blockArray = this.blockObjArray;
+//            let validation = false;
+//        for (let i=0; i<5; i++) {
+//                if(blockArray[i] == clickLocation) {
+////                console.log(blockArray[i]);
+//                validation = true;
+//           }
+////        console.log(validation);
+//        }
+//        console.log(this.blockObjArray)
+        
+        if(blockValid()) {
         if(clRowUp == plRow && clCol == plCol) {
                 playerGo = true;
             }
@@ -215,7 +236,7 @@ export class Board {
         
 /*Horizontal movement verification logic *************************************/  
         
-        if(true) {
+        if(blockValid()) {
          if(clColLeft == plCol && clRow == plRow) {
                 playerGo = true;
             }
